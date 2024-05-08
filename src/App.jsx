@@ -7,12 +7,14 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
 
-  const handleInputChange = (event) => {
-    setNewTask(event.target.value);
+  console.log(tasks, newTask)
+
+  const handleInputChange = (e) => {
+    setNewTask(e.target.value);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
       addTask();
     }
   };
@@ -41,11 +43,11 @@ const App = () => {
             placeholder="Create a new todo…"
           />
         </Form>
-        <ul>
+        <Ul>
           {tasks.map((task, index) => (
-            <li key={index}>{task}</li>
+            <List key={index}>{task}</List>
           ))}
-        </ul>
+        </Ul>
       </MainSection>
     </Container>
   );
@@ -86,9 +88,26 @@ const Form = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-bottom: 20px;
 
   input {
     width: 100%;
     padding: 15px;
   }
+`;
+
+const Ul = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+`;
+
+const List = styled.li`
+  list-style: none;
+  border: 1px solid black;
+  font-size: 18px;
+  line-height: 18px;
+  padding: 20px;
+  width: 540px;
 `;

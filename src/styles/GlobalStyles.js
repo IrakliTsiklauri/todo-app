@@ -7,7 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
 }
 
-body{
+body, input, button{
     font-family: "Josefin Sans", sans-serif;
 }
 `;
