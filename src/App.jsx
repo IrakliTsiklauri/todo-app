@@ -7,7 +7,7 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
 
-  console.log(tasks, newTask)
+  console.log(tasks, newTask);
 
   const handleInputChange = (e) => {
     setNewTask(e.target.value);
@@ -48,6 +48,19 @@ const App = () => {
             <List key={index}>{task}</List>
           ))}
         </Ul>
+        <Action>
+          <ItemsQuantity>
+            <p>5 items left</p>
+          </ItemsQuantity>
+          <ChooseTask>
+            <p>All</p>
+            <p>Active</p>
+            <p>Completed</p>
+          </ChooseTask>
+          <ClearTasks>
+            <p>Clear Completed</p>
+          </ClearTasks>
+        </Action>
       </MainSection>
     </Container>
   );
@@ -110,4 +123,57 @@ const List = styled.li`
   line-height: 18px;
   padding: 20px;
   width: 540px;
+`;
+
+const Action = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  padding: 20px;
+  width: 540px;
+`;
+
+const ItemsQuantity = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-size: 14px;
+    color: rgba(148, 149, 165, 1);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+const ChooseTask = styled.div`
+  display: flex;
+  gap: 15px;
+
+  p {
+    font-size: 14px;
+    color: rgba(148, 149, 165, 1);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+const ClearTasks = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-size: 14px;
+    color: rgba(148, 149, 165, 1);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
