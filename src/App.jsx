@@ -28,12 +28,11 @@ const App = () => {
 
   return (
     <Container>
+      <Head>
+        <h1>Todo App</h1>
+        <img src={moon} alt="moon" />
+      </Head>
       <MainSection>
-        <Head>
-          <h1>Todo App</h1>
-          <img src={moon} alt="moon" />
-        </Head>
-
         <Form>
           <input
             type="text"
@@ -70,13 +69,13 @@ export default App;
 
 const Container = styled.div`
   display: flex;
-
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
   background-image: url(${mountainImg});
   background-repeat: no-repeat;
-  background-size: 100% 30%;
+  background-size: 100% 50%;
 `;
 
 const MainSection = styled.div`
@@ -85,15 +84,17 @@ const MainSection = styled.div`
   align-items: center;
   justify-content: center;
   width: 540px;
+  border-radius: 5px;
+  box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
 `;
 
 const Head = styled.div`
-  width: 100%;
+  width: 28%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: red;
   margin-bottom: 40px;
+  color: #fff;
 `;
 
 const Form = styled.div`
@@ -105,7 +106,10 @@ const Form = styled.div`
 
   input {
     width: 100%;
-    padding: 15px;
+    padding: 20px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid rgba(227, 228, 241, 1);
   }
 `;
 
@@ -114,22 +118,27 @@ const Ul = styled.ul`
   flex-direction: column;
   justify-content: center;
   align-items: start;
+  border-radius: 5px;
+  width: 100%;
 `;
 
 const List = styled.li`
   list-style: none;
-  border: 1px solid black;
+  border-bottom: 2px solid rgba(227, 228, 241, 1);
   font-size: 18px;
   line-height: 18px;
   padding: 20px;
-  width: 540px;
+  width: 100%;
+  background-color: #fff;
+  overflow: hidden;
 `;
 
 const Action = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid black;
+  border-radius: 5px;
+  border-top: 0.1px solid rgba(227, 228, 241, 1);
   padding: 20px;
   width: 540px;
 `;
