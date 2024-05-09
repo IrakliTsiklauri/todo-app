@@ -7,8 +7,6 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
 
-  console.log(tasks, newTask);
-
   const handleInputChange = (e) => {
     setNewTask(e.target.value);
   };
@@ -21,9 +19,15 @@ const App = () => {
 
   const addTask = () => {
     if (newTask.trim() !== "") {
-      setTasks([...tasks, newTask]);
+      setTasks([...tasks, { text: newTask, completed: false }]);
       setNewTask("");
     }
+  };
+
+  const toggleTaskCompletion = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].completed = !updatedTasks[index].completed;
+    setTasks(updatedTasks);
   };
 
   return (
@@ -44,7 +48,12 @@ const App = () => {
         </Form>
         <Ul>
           {tasks.map((task, index) => (
-            <List key={index}>{task}</List>
+            <List key={index} completed={task.completed}>
+              <TaskCheckbox onClick={() => toggleTaskCompletion(index)}>
+                {task.completed && <CheckIcon />}
+              </TaskCheckbox>
+              <TaskText completed={task.completed}>{task.text}</TaskText>
+            </List>
           ))}
         </Ul>
         <Action>
@@ -124,6 +133,8 @@ const Ul = styled.ul`
 
 const List = styled.li`
   list-style: none;
+  display: flex;
+  align-items: center;
   border-bottom: 2px solid rgba(227, 228, 241, 1);
   font-size: 18px;
   line-height: 18px;
@@ -131,6 +142,32 @@ const List = styled.li`
   width: 100%;
   background-color: #fff;
   overflow: hidden;
+  opacity: ${(props) => (props.completed ? 0.6 : 1)};
+  text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
+`;
+
+const TaskCheckbox = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+const CheckIcon = styled.span`
+  width: 12px;
+  height: 12px;
+  background-color: #007bff;
+  border-radius: 50%;
+`;
+
+const TaskText = styled.span`
+  flex: 1;
+  color: ${(props) => (props.completed ? "rgba(0, 0, 0, 0.6)" : "inherit")};
 `;
 
 const Action = styled.div`
