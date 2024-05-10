@@ -147,10 +147,10 @@ const List = styled.li`
 `;
 
 const TaskCheckbox = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   margin-right: 10px;
   display: flex;
   align-items: center;
@@ -159,15 +159,14 @@ const TaskCheckbox = styled.div`
 `;
 
 const CheckIcon = styled.span`
-  width: 12px;
-  height: 12px;
-  background-color: #007bff;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #55ddff 0%, #c058f3 100%);
   border-radius: 50%;
 `;
 
 const TaskText = styled.span`
-  flex: 1;
-  color: ${(props) => (props.completed ? "rgba(0, 0, 0, 0.6)" : "inherit")};
+  color: ${(props) => (props.completed ? "rgba(0, 0, 0, 0.6)" : "rgba(73, 76, 107, 1)")};
 `;
 
 const Action = styled.div`
