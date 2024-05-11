@@ -1,11 +1,17 @@
 import styled from "styled-components";
 import mountainImg from "./images/bg-desktop-light.jpg";
 import moon from "./images/icon-moon.svg";
+import sun from "./images/icon-sun.svg";
 import { useState } from "react";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const [isDark, setIsDark] = useState(false);
+
+  const toggleMode = () => {
+    setIsDark((prevMode) => !prevMode);
+  };
 
   const handleInputChange = (e) => {
     setNewTask(e.target.value);
@@ -32,9 +38,11 @@ const App = () => {
 
   return (
     <Container>
-      <Head>
+      <Head isDark={isDark} toggleMode={toggleMode}>
         <h1>Todo App</h1>
-        <img src={moon} alt="moon" />
+        <ModeBtn isDark={isDark} onClick={toggleMode}>
+          <img src={isDark ? `${sun}` : `${moon}`} alt="mode" />
+        </ModeBtn>
       </Head>
       <MainSection>
         <Form>
@@ -104,7 +112,15 @@ const Head = styled.div`
   justify-content: space-between;
   margin-bottom: 40px;
   color: #fff;
+
+
 `;
+
+const ModeBtn = styled.button`
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+`
 
 const Form = styled.div`
   display: flex;
@@ -135,6 +151,7 @@ const List = styled.li`
   list-style: none;
   display: flex;
   align-items: center;
+  justify-content: start;
   border-bottom: 2px solid rgba(227, 228, 241, 1);
   font-size: 18px;
   line-height: 18px;
@@ -142,7 +159,7 @@ const List = styled.li`
   width: 100%;
   background-color: #fff;
   overflow: hidden;
-  opacity: ${(props) => (props.completed ? 0.6 : 1)};
+  /* opacity: ${(props) => (props.completed ? 0.6 : 1)}; */
   text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
 `;
 
@@ -166,7 +183,9 @@ const CheckIcon = styled.span`
 `;
 
 const TaskText = styled.span`
-  color: ${(props) => (props.completed ? "rgba(0, 0, 0, 0.6)" : "rgba(73, 76, 107, 1)")};
+  opacity: ${(props) => (props.completed ? 0.6 : 1)};
+  color: ${(props) =>
+    props.completed ? "rgba(0, 0, 0, 0.6)" : "rgba(73, 76, 107, 1)"};
 `;
 
 const Action = styled.div`
