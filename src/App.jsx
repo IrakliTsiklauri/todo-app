@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import mountainImg from "./images/bg-desktop-light.jpg";
+import bgImageLight from "./images/bg-desktop-light.jpg";
+import bgImageDark from "./images/bg-desktop-dark.jpg";
 import moon from "./images/icon-moon.svg";
 import sun from "./images/icon-sun.svg";
 import { useState } from "react";
@@ -37,16 +38,20 @@ const App = () => {
   };
 
   return (
-    <Container>
+    <Container isDark={isDark}>
       <Head isDark={isDark} toggleMode={toggleMode}>
         <h1>Todo App</h1>
         <ModeBtn isDark={isDark} onClick={toggleMode}>
-          <img src={isDark ? `${sun}` : `${moon}`} alt="mode" />
+          <img
+            src={isDark ? `${sun}` : `${moon}`}
+            alt={isDark ? "sun" : "moon"}
+          />
         </ModeBtn>
       </Head>
       <MainSection>
-        <Form>
+        <Form isDark={isDark}>
           <input
+            isDark={isDark}
             type="text"
             value={newTask}
             onChange={handleInputChange}
@@ -56,15 +61,15 @@ const App = () => {
         </Form>
         <Ul>
           {tasks.map((task, index) => (
-            <List key={index} completed={task.completed}>
-              <TaskCheckbox onClick={() => toggleTaskCompletion(index)}>
+            <List key={index} completed={task.completed} isDark={isDark}>
+              <TaskCheckbox onClick={() => toggleTaskCompletion(index)} isDark={isDark}>
                 {task.completed && <CheckIcon />}
               </TaskCheckbox>
               <TaskText completed={task.completed}>{task.text}</TaskText>
             </List>
           ))}
         </Ul>
-        <Action>
+        <Action isDark={isDark}>
           <ItemsQuantity>
             <p>5 items left</p>
           </ItemsQuantity>
@@ -90,7 +95,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url(${mountainImg});
+  background-color: ${(props) =>
+    props.isDark ? "hsl(235, 21%, 11%)" : "#fff"};
+  background-image: url(${(props) =>
+    props.isDark ? bgImageDark : bgImageLight});
   background-repeat: no-repeat;
   background-size: 100% 50%;
 `;
@@ -102,7 +110,8 @@ const MainSection = styled.div`
   justify-content: center;
   width: 540px;
   border-radius: 5px;
-  box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
+  box-shadow: ${(props) => (props.isDark ? "" : "rgba(194, 195, 214, 0.5)")};
+  /* box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5); */
 `;
 
 const Head = styled.div`
@@ -112,15 +121,13 @@ const Head = styled.div`
   justify-content: space-between;
   margin-bottom: 40px;
   color: #fff;
-
-
 `;
 
 const ModeBtn = styled.button`
   background-color: inherit;
   border: none;
   cursor: pointer;
-`
+`;
 
 const Form = styled.div`
   display: flex;
@@ -134,7 +141,12 @@ const Form = styled.div`
     padding: 20px;
     outline: none;
     border-radius: 5px;
-    border: 1px solid rgba(227, 228, 241, 1);
+    border: ${(props) =>
+      props.isDark ? "none" : "1px solid rgba(227, 228, 241, 1)"};
+    background-color: ${(props) =>
+      props.isDark ? "rgba(37, 39, 61, 1)" : "#fff"};
+    color: ${(props) =>
+      props.isDark ? "rgba(200, 203, 231, 1)" : "rgba(73, 76, 107, 1)"};
   }
 `;
 
@@ -152,12 +164,16 @@ const List = styled.li`
   display: flex;
   align-items: center;
   justify-content: start;
-  border-bottom: 2px solid rgba(227, 228, 241, 1);
+  border-bottom: ${(props) =>
+    props.isDark
+      ? "2px solid rgba(57, 58, 75, 1)"
+      : "2px solid rgba(227, 228, 241, 1)"};
   font-size: 18px;
   line-height: 18px;
   padding: 20px;
   width: 100%;
-  background-color: #fff;
+  background-color: ${(props) =>
+    props.isDark ? "rgba(37, 39, 61, 1)" : "#fff"};
   overflow: hidden;
   /* opacity: ${(props) => (props.completed ? 0.6 : 1)}; */
   text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
@@ -167,7 +183,7 @@ const TaskCheckbox = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: ${(props) => (props.isDark ? "1px solid #43476e" : "1px solid #dfdfe6")};
   margin-right: 10px;
   display: flex;
   align-items: center;
@@ -186,6 +202,7 @@ const TaskText = styled.span`
   opacity: ${(props) => (props.completed ? 0.6 : 1)};
   color: ${(props) =>
     props.completed ? "rgba(0, 0, 0, 0.6)" : "rgba(73, 76, 107, 1)"};
+  color: ${(props) => (props.isDark ? "rgba(200, 203, 231, 1)" : "#71748f")};
 `;
 
 const Action = styled.div`
@@ -193,9 +210,14 @@ const Action = styled.div`
   align-items: center;
   justify-content: space-between;
   border-radius: 5px;
-  border-top: 0.1px solid rgba(227, 228, 241, 1);
+  border: ${(props) =>
+    props.isDark
+      ? "1px solid rgba(57, 58, 75, 1)"
+      : "1px solid rgba(227, 228, 241, 1)"}; //rgba(227, 228, 241, 1)
   padding: 20px;
   width: 540px;
+  background-color: ${(props) =>
+    props.isDark ? "rgba(37, 39, 61, 1)" : "#fff"};
 `;
 
 const ItemsQuantity = styled.div`
