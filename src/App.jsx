@@ -3,12 +3,32 @@ import bgImageLight from "./images/bg-desktop-light.jpg";
 import bgImageDark from "./images/bg-desktop-dark.jpg";
 import moon from "./images/icon-moon.svg";
 import sun from "./images/icon-sun.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [isDark, setIsDark] = useState(false);
+  const [filter, setFilter] = useState("all");
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === "all") {
+      return true;
+    } else if (filter === "active") {
+      return !task.completed;
+    } else if (filter === "completed") {
+      return task.completed;
+    }
+    return true;
+  });
+
+  const handleFilterChange = (selectedFilter) => {
+    setFilter(selectedFilter);
+  };
+
+  useEffect(() => {
+    setFilter("all");
+  }, []);
 
   const toggleMode = () => {
     setIsDark((prevMode) => !prevMode);
@@ -60,9 +80,12 @@ const App = () => {
           />
         </Form>
         <Ul>
-          {tasks.map((task, index) => (
+          {filteredTasks.map((task, index) => (
             <List key={index} completed={task.completed} isDark={isDark}>
-              <TaskCheckbox onClick={() => toggleTaskCompletion(index)} isDark={isDark}>
+              <TaskCheckbox
+                onClick={() => toggleTaskCompletion(index)}
+                isDark={isDark}
+              >
                 {task.completed && <CheckIcon />}
               </TaskCheckbox>
               <TaskText completed={task.completed}>{task.text}</TaskText>
@@ -74,9 +97,24 @@ const App = () => {
             <p>5 items left</p>
           </ItemsQuantity>
           <ChooseTask>
-            <p>All</p>
-            <p>Active</p>
-            <p>Completed</p>
+            <p
+              onClick={() => handleFilterChange("all")}
+              className={filter === "all" ? "active" : ""}
+            >
+              All
+            </p>
+            <p
+              onClick={() => handleFilterChange("active")}
+              className={filter === "active" ? "active" : ""}
+            >
+              Active
+            </p>
+            <p
+              onClick={() => handleFilterChange("completed")}
+              className={filter === "completed" ? "active" : ""}
+            >
+              Completed
+            </p>
           </ChooseTask>
           <ClearTasks>
             <p>Clear Completed</p>
@@ -183,7 +221,8 @@ const TaskCheckbox = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: ${(props) => (props.isDark ? "1px solid #43476e" : "1px solid #dfdfe6")};
+  border: ${(props) =>
+    props.isDark ? "1px solid #43476e" : "1px solid #dfdfe6"};
   margin-right: 10px;
   display: flex;
   align-items: center;
@@ -220,6 +259,8 @@ const Action = styled.div`
     props.isDark ? "rgba(37, 39, 61, 1)" : "#fff"};
 `;
 
+
+
 const ItemsQuantity = styled.div`
   display: flex;
   align-items: center;
@@ -247,6 +288,11 @@ const ChooseTask = styled.div`
       cursor: pointer;
     }
   }
+
+  p.active {
+  font-weight: bold;
+  color: rgba(58, 124, 253, 1); 
+}
 `;
 
 const ClearTasks = styled.div`
