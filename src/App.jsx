@@ -10,6 +10,8 @@ const App = () => {
   const [newTask, setNewTask] = useState("");
   const [isDark, setIsDark] = useState(false);
   const [filter, setFilter] = useState("all");
+  const [completeCount, setCompleteCount] = useState(0);
+
 
   const filteredTasks = tasks.filter((task) => {
     if (filter === "all") {
@@ -21,6 +23,11 @@ const App = () => {
     }
     return true;
   });
+
+  useEffect(() => {
+    const count = tasks.filter(task => !task.completed).length;
+    setCompleteCount(count);
+  }, [tasks]);
 
   const handleFilterChange = (selectedFilter) => {
     setFilter(selectedFilter);
@@ -48,6 +55,7 @@ const App = () => {
     if (newTask.trim() !== "") {
       setTasks([...tasks, { text: newTask, completed: false }]);
       setNewTask("");
+      setCompleteCount(completeCount + 1); 
     }
   };
 
@@ -55,6 +63,12 @@ const App = () => {
     const updatedTasks = [...tasks];
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasks(updatedTasks);
+    
+    if (updatedTasks[index].completed) {
+      setCompleteCount(completeCount - 1); 
+    } else {
+      setCompleteCount(completeCount + 1); 
+    }
   };
 
   return (
@@ -94,7 +108,7 @@ const App = () => {
         </Ul>
         <Action isDark={isDark}>
           <ItemsQuantity>
-            <p>5 items left</p>
+            <p>{`${completeCount}` } items left</p>
           </ItemsQuantity>
           <ChooseTask>
             <p
