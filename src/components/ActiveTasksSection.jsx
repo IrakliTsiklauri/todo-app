@@ -1,9 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-const ActiveTasksSection = ({ isDark, filter, setFilter, completeCount }) => {
+const ActiveTasksSection = ({
+  isDark,
+  filter,
+  setFilter,
+  completeCount,
+  tasks,
+  setTasks,
+}) => {
   const handleFilterChange = (selectedFilter) => {
     setFilter(selectedFilter);
+  };
+
+  const deleteCompletedTasks = () => {
+    const incompleteTasks = tasks.filter((task) => !task.completed);
+    setTasks(incompleteTasks);
   };
 
   return (
@@ -32,7 +44,7 @@ const ActiveTasksSection = ({ isDark, filter, setFilter, completeCount }) => {
         </p>
       </ChooseTask>
       <ClearTasks>
-        <p>Clear Completed</p>
+        <p onClick={deleteCompletedTasks}>Clear Completed</p>
       </ClearTasks>
     </Action>
   );

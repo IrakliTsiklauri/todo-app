@@ -23,11 +23,9 @@ const App = () => {
     setFilter("all");
   }, []);
 
- 
-
   return (
     <Container isDark={isDark}>
-      <HeaderSection isDark={isDark} setIsDark={setIsDark}/>
+      <HeaderSection isDark={isDark} setIsDark={setIsDark} />
       <MainSection>
         <InputSection
           isDark={isDark}
@@ -49,12 +47,17 @@ const App = () => {
         />
 
         <ActiveTasksSection
+        tasks={tasks}
+        setTasks={setTasks}
           filter={filter}
           setFilter={setFilter}
           isDark={isDark}
           completeCount={completeCount}
         />
       </MainSection>
+      <Text>
+        <p>Drag and drop to reorder list</p>
+      </Text>
     </Container>
   );
 };
@@ -84,4 +87,10 @@ const MainSection = styled.div`
   border-radius: 5px;
   box-shadow: ${(props) => (props.isDark ? "" : "rgba(194, 195, 214, 0.5)")};
   /* box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5); */
+`;
+
+const Text = styled.div`
+  margin-top: 40px;
+  color: rgba(148, 149, 165, 1);
+  font-size: 14px;
 `;
