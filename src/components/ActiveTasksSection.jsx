@@ -65,6 +65,11 @@ const Action = styled.div`
   width: 540px;
   background-color: ${(props) =>
     props.isDark ? "rgba(37, 39, 61, 1)" : "#fff"};
+
+  @media (max-width: 570px) {
+    width: 327px;
+    padding: 10px;
+  }
 `;
 
 const ItemsQuantity = styled.div`
@@ -79,6 +84,9 @@ const ItemsQuantity = styled.div`
     &:hover {
       cursor: pointer;
     }
+    @media (max-width: 570px) {
+    font-size: 12px;
+  }
   }
 `;
 
@@ -93,6 +101,9 @@ const ChooseTask = styled.div`
     &:hover {
       cursor: pointer;
     }
+    @media (max-width: 570px) {
+    font-size: 12px;
+  }
   }
 
   p.active {
@@ -113,5 +124,8 @@ const ClearTasks = styled.div`
     &:hover {
       cursor: pointer;
     }
+    @media (max-width: 570px) {
+    font-size: 12px;
+  }
   }
 `;

@@ -62,5 +62,14 @@ const Form = styled.div`
       props.isDark ? "rgba(37, 39, 61, 1)" : "#fff"};
     color: ${(props) =>
       props.isDark ? "rgba(200, 203, 231, 1)" : "rgba(73, 76, 107, 1)"};
+
+    @media (max-width: 570px) {
+      padding: 15px;
+    }
+  }
+
+  @media (max-width: 570px) {
+    width: 327px;
+    padding: 10px 0;
   }
 `;

@@ -58,6 +58,10 @@ const Ul = styled.ul`
   align-items: start;
   border-radius: 5px;
   width: 100%;
+
+  @media (max-width: 570px) {
+    width: 327px;
+  }
 `;
 
 const List = styled.li`
@@ -78,6 +82,11 @@ const List = styled.li`
   overflow: hidden;
   /* opacity: ${(props) => (props.completed ? 0.6 : 1)}; */
   text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
+  cursor: pointer;
+
+  @media (max-width: 570px) {
+    padding: 10px;
+  }
 `;
 
 const TaskCheckbox = styled.div`
@@ -105,4 +114,8 @@ const TaskText = styled.span`
   color: ${(props) =>
     props.completed ? "rgba(0, 0, 0, 0.6)" : "rgba(73, 76, 107, 1)"};
   color: ${(props) => (props.isDark ? "rgba(200, 203, 231, 1)" : "#71748f")};
+
+  @media (max-width: 570px) {
+    font-size: 12px;
+  }
 `;

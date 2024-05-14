@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import bgImageLight from "./images/bg-desktop-light.jpg";
 import bgImageDark from "./images/bg-desktop-dark.jpg";
+import bgMobileDark from "./images/bg-mobile-dark.jpg"
+import bgMobileLight from "./images/bg-mobile-light.jpg"
+
 import { useState, useEffect } from "react";
 import HeaderSection from "./components/HeaderSection";
 import InputSection from "./components/InputSection";
@@ -47,8 +50,8 @@ const App = () => {
         />
 
         <ActiveTasksSection
-        tasks={tasks}
-        setTasks={setTasks}
+          tasks={tasks}
+          setTasks={setTasks}
           filter={filter}
           setFilter={setFilter}
           isDark={isDark}
@@ -76,6 +79,12 @@ const Container = styled.div`
     props.isDark ? bgImageDark : bgImageLight});
   background-repeat: no-repeat;
   background-size: 100% 50%;
+
+  @media (max-width: 570px) {
+    background-image: url(${(props) =>
+      props.isDark ? bgMobileDark : bgMobileLight});
+    background-repeat: no-repeat;
+  }
 `;
 
 const MainSection = styled.div`
