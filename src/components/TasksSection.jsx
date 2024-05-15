@@ -20,6 +20,27 @@ const TasksSection = ({
     return true;
   });
 
+  const handleDragStart = (e, index) => {
+    e.dataTransfer.setData("text/plain", index.toString());
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, targetIndex) => {
+    e.preventDefault();
+
+    const sourceIndex = parseInt(e.dataTransfer.getData("text/plain"), 10);
+
+    const updatedTasks = [...tasks];
+
+    const [removedTask] = updatedTasks.splice(sourceIndex, 1);
+    updatedTasks.splice(targetIndex, 0, removedTask);
+
+    setTasks(updatedTasks);
+  };
+
   const toggleTaskCompletion = (index) => {
     const updatedTasks = [...tasks];
     updatedTasks[index].completed = !updatedTasks[index].completed;
@@ -35,11 +56,16 @@ const TasksSection = ({
   return (
     <Ul>
       {filteredTasks.map((task, index) => (
-        <List key={index} completed={task.completed} isDark={isDark}>
-          <TaskCheckbox
-            onClick={() => toggleTaskCompletion(index)}
-            isDark={isDark}
-          >
+        <List
+          key={index}
+          completed={task.completed}
+          isDark={isDark}
+          draggable
+          onDragStart={(e) => handleDragStart(e, index)}
+          onDragOver={handleDragOver}
+          onDrop={(e) => handleDrop(e, index)}
+        >
+          <TaskCheckbox onClick={() => toggleTaskCompletion(index)} isDark={isDark}>
             {task.completed && <CheckIcon />}
           </TaskCheckbox>
           <TaskText completed={task.completed}>{task.text}</TaskText>
@@ -77,10 +103,8 @@ const List = styled.li`
   line-height: 18px;
   padding: 20px;
   width: 100%;
-  background-color: ${(props) =>
-    props.isDark ? "rgba(37, 39, 61, 1)" : "#fff"};
+  background-color: ${(props) => (props.isDark ? "rgba(37, 39, 61, 1)" : "#fff")};
   overflow: hidden;
-  /* opacity: ${(props) => (props.completed ? 0.6 : 1)}; */
   text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
   cursor: pointer;
 
@@ -93,8 +117,7 @@ const TaskCheckbox = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: ${(props) =>
-    props.isDark ? "1px solid #43476e" : "1px solid #dfdfe6"};
+  border: ${(props) => (props.isDark ? "1px solid #43476e" : "1px solid #dfdfe6")};
   margin-right: 10px;
   display: flex;
   align-items: center;
